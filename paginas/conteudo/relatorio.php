@@ -30,16 +30,42 @@
                   </tr>
                   </thead>
                   <tbody>
+                    
+                  <?php
+                    // Consulta SQL para selecionar os contatos do usuário atual
+                    $select = "SELECT * FROM tb_contatos WHERE id_user = :id_user ORDER BY id_contatos DESC LIMIT 6";
+                    
+                    try{
+                        // Prepara a consulta SQL com o parâmetro :id_user
+                    $result = $conect->prepare($select);
+                    $cont = 1; // Inicializa o contador de linhas
+                      // Vincula o ID do usuário ao parâmetro :id_user
+                     $result->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+
+                    // Executa a consulta SQL
+                    $result->execute();
+
+                    // Verifica se a consulta retornou algum resultado
+                    $contar = $result->rowCount();
+                    
+                    if ($contar > 0) { 
+                       // Itera sobre cada linha de resultado da consulta
+                    while ($show = $result->FETCH(PDO::FETCH_OBJ)){
+
+
+                   
+                    ?>
+
                   
                                       
                     <tr>
-                      <td>1</td>
+                    <td><?php echo $cont++; ?></td>
                       <td>
                       <img src="images/">
                      </td>
-                      <td>Leandro Costa</td>
-                      <td>85991446498</td>
-                      <td>francisco.silva92@prof.ce.gov.br</td>
+                     <td><?php echo $show->nome_contatos; ?></td>
+                    <td><?php echo $show->fone_contatos; ?></td>
+                    <td><?php echo $show->email_contatos; ?></td>
                       
                       <td>
                       <div class="btn-group">
@@ -48,6 +74,23 @@
                       </div>
                       </td>
                     </tr>
+                    <?php
+                     }
+                    }else{
+                     // Se a consulta não retornar resultados, exibe uma mensagem
+                    // (não implementado nesse exemplo)
+                    echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Não há contatos</strong></div>';
+                    }
+  
+                      
+                      
+                      
+                  }catch (PDOException $e) {
+  
+                      }
+
+                    ?>
                    
                   </tbody>
                   <tfoot>
