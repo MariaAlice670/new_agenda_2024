@@ -18,54 +18,60 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-hover">
+                <table id="example" class="display nowrap" style="width:100%">
                   <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Foto</th>
+                    <th style="width: 5%; text-align:center">#</th>
+                    <th style="text-align:center">Foto</th>
                     <th>Nome</th>
-                    <th>Telefone</th>
+                    <th style="text-align:left">Telefone</th>
                     <th>E-mail</th>
                     <th>Ações</th>
                   </tr>
                   </thead>
                   <tbody>
-                    
                   <?php
-                    // Consulta SQL para selecionar os contatos do usuário atual
-                    $select = "SELECT * FROM tb_contatos WHERE id_user = :id_user ORDER BY id_contatos DESC LIMIT 6";
-                    
-                    try{
-                        // Prepara a consulta SQL com o parâmetro :id_user
-                    $result = $conect->prepare($select);
-                    $cont = 1; // Inicializa o contador de linhas
-                      // Vincula o ID do usuário ao parâmetro :id_user
-                     $result->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+    // Consulta SQL para selecionar os contatos do usuário atual
+    $select = "SELECT * FROM tb_contatos WHERE id_user = :id_user ORDER BY id_contatos DESC";
 
-                    // Executa a consulta SQL
-                    $result->execute();
+    try{
+      // Prepara a consulta SQL com o parâmetro :id_user
+      $result = $conect->prepare($select);
+      // Inicializa o contador de linhas
+      $cont = 1;
+      // Vincula o ID do usuário ao parâmetro :id_user
+      $result->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+      // Executa a consulta SQL
+      $result->execute();
 
-                    // Verifica se a consulta retornou algum resultado
-                    $contar = $result->rowCount();
-                    
-                    if ($contar > 0) { 
-                       // Itera sobre cada linha de resultado da consulta
-                    while ($show = $result->FETCH(PDO::FETCH_OBJ)){
+      // Verifica se a consulta retornou algum resultado
+      $contar = $result->rowCount();
 
+      if ($contar > 0) {
+        // Itera sobre cada linha de resultado da consulta
+        while ($show = $result->FETCH(PDO::FETCH_OBJ)) {
 
-                   
-                    ?>
+      
 
-                  
+                  ?>
                                       
                     <tr>
-                    <td><?php echo $cont++; ?></td>
-                      <td>
-                      <img src="images/">
+                      <td style="width: 5%; text-align:center"><?php echo $cont++; ?></td>
+                      <td style="text-align:center">
+                      <?php
+            // Verifica se a variável $foto_user é igual a 'avatar-padrao.png'
+            if ($show->foto_contatos == 'avatar-padrao.png') {
+                // Exibe a imagem do avatar padrão
+                echo '<img src="../img/avatar_p/' . $show->foto_contatos . '" alt="' . $show->foto_contatos . '" title="' . $show->foto_contatos . '" style="width: 50px; border-radius: 100%;">';
+            } else {
+                // Exibe a imagem do usuário
+                echo '<img src="../img/cont/' . $show->foto_contatos . '" alt="' . $show->foto_contatos . '" title="' . $show->foto_contatos . '" style="width: 50px; border-radius: 100%;">';
+            }
+            ?>  
                      </td>
-                     <td><?php echo $show->nome_contatos; ?></td>
-                    <td><?php echo $show->fone_contatos; ?></td>
-                    <td><?php echo $show->email_contatos; ?></td>
+                      <td><?php echo $show->nome_contatos; ?></td>
+                      <td style="text-align:left"><?php echo $show->fone_contatos; ?></td>
+                      <td><?php echo $show->email_contatos; ?></td>
                       
                       <td>
                       <div class="btn-group">
@@ -74,39 +80,31 @@
                       </div>
                       </td>
                     </tr>
-                    <?php
-                     }
-                    }else{
-                     // Se a consulta não retornar resultados, exibe uma mensagem
-                    // (não implementado nesse exemplo)
-                    echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Não há contatos</strong></div>';
+                   <?php
                     }
-  
-                      
-                      
-                      
-                  }catch (PDOException $e) {
-  
-                      }
-
-                    ?>
-                   
+                  }else{
+                    // Se a consulta não retornar resultados, exibe uma mensagem
+                    echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>
+                          <strong>Não há Contatos!</strong></div>';
+                  }
+                }catch(Exception $e){
+                  // Exibe a mensagem de erro de PDO
+                  echo '<strong>ERRO DE PDO= </strong>' . $e->getMessage();
+                }
+                   ?>
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>#</th>
-                    <th>Foto</th>
+                    <th style="width: 5%; text-align:center">#</th>
+                    <th style="text-align:center">Foto</th>
                     <th>Nome</th>
-                    <th>Telefone</th>
+                    <th style="text-align:left">Telefone</th>
                     <th>E-mail</th>
                     <th>Ações</th>
                   </tr>
                   </tfoot>
                 </table>
-                <div class="col-lg-12 d-flex justify-content-center">
-                  <a href="conteudo/relatoriopdf.php?id=<?php echo $id_user;?>" class="btn btn-lg btn-primary">Gerar relatório completo</a>
-                </div>
+                
                 </div>
               <!-- /.card-body -->
             </div>

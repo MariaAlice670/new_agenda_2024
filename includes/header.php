@@ -24,8 +24,8 @@ include_once('sair.php');
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Agenda Eletrônica</title>
   <!-- DataTables -->
-  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css">
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -52,8 +52,8 @@ include_once('sair.php');
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-  <?php
-  // Inclui o arquivo de configuração de conexão com o banco de dados
+<?php
+// Inclui o arquivo de configuração de conexão com o banco de dados
 include_once('../config/conexao.php');
 
 // Obtém o email do usuário logado a partir da sessão
@@ -96,7 +96,7 @@ try {
     // Exibe uma mensagem de erro genérica para o usuário
     echo '<div class="alert alert-danger"><strong>Aviso!</strong> Ocorreu um erro ao tentar acessar os dados do perfil.</div>';
 }
-  ?>
+?>
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -157,15 +157,15 @@ try {
             // Verifica se a variável $foto_user é igual a 'avatar-padrao.png'
             if ($foto_user == 'avatar-padrao.png') {
                 // Exibe a imagem do avatar padrão
-                echo '<img src="../img/avatar_p/' . $foto_user . '" alt="' . $foto_user . '" title="' . $foto_user . '" style="width: 40px; border-radius: 100%;">';
+                echo '<img src="../img/avatar_p/' . $foto_user . '" alt="' . $foto_user . '" title="' . $nome_user . '" style="width: 40px; border-radius: 100%;">';
             } else {
                 // Exibe a imagem do usuário
-                echo '<img src="../img/user/' . $foto_user . '" alt="' . $foto_user . '" title="' . $foto_user . '" style="width: 40px; border-radius: 100%;">';
+                echo '<img src="../img/user/' . $foto_user . '" alt="' . $foto_user . '" title="' . $nome_user . '" style="width: 40px; border-radius: 100%;">';
             }
           ?>
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $nome_user; ?></a>
+          <a href="home.php?acao=perfil" class="d-block"><?php echo $nome_user; ?></a>
         </div>
       </div>
 
